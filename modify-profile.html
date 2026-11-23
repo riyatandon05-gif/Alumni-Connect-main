@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Modify Profile</title>
+  <link rel="stylesheet" href="dashboard.css" />
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">🌐 Portal Panel</div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="institute.html" class="active">Overview</a></li>
+        <li><a href="institute.html#updates">Updates</a></li>
+        <li><a href="institute.html#alumni">Alumni Network</a></li>
+        <li><a href="institute.html#partnerships">Partnerships</a></li>
+        <li>
+          <div class="profile-dropdown">
+            <button class="profile-dropbtn">Profile ▼</button>
+            <div class="profile-dropdown-content">
+              <a href="modify-profile.html">Modify Profile</a>
+              <a href="view-profile.html">View Profile</a>
+            </div>
+          </div>
+        </li>
+  
+        <li><a href="#" id="logoutBtn">Logout</a></li>
+      </ul>
+    </nav>
+  </header>
+  <section class="section">
+  <h2>Modify Profile</h2>
+  <div class="profile-card">
+    <form id="modifyProfileForm">
+      <label for="name"><strong>Name:</strong></label>
+      <input type="text" id="name" name="name" value="Admin" required /><br><br>
+      <label for="email"><strong>Email:</strong></label>
+      <input type="email" id="email" name="email" value="admin@univ.edu" required /><br><br>
+      <button type="submit" class="btn-primary">Save Changes</button>
+    </form>
+    <a href="institute.html" class="btn-secondary" style="margin-top:20px;display:inline-block;">← Back to Dashboard</a>
+  </div>
+</section>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      let user = null;
+      try { user = JSON.parse(localStorage.getItem('currentUser') || 'null'); } catch {}
+      const name = document.getElementById('name');
+      const email = document.getElementById('email');
+      if (user) { name.value = user.name || ''; email.value = user.email || ''; }
+      email.readOnly = true;
+      document.getElementById('modifyProfileForm').addEventListener('submit', async event => {
+        event.preventDefault();
+        const token = localStorage.getItem('authToken');
+        try {
+          const response = await fetch('http://localhost:3000/api/profile', {
+            method: 'PATCH', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+            body: JSON.stringify({ name: name.value.trim() })
+          });
+          const data = await response.json();
+          if (!response.ok) throw new Error(data.error || 'Update failed');
+          localStorage.setItem('currentUser', JSON.stringify(data.user));
+          alert('Profile updated!');
+        } catch (error) { alert(error.message); }
+      });
+    });
+  </script>
+  <script src="dashboard.js"></script>
+</body>
+</html>

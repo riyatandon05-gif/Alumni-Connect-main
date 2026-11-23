@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Opportunities · Alumni Connect</title><link rel="stylesheet" href="dashboard.css" />
+</head>
+<body>
+<header class="navbar"><div class="logo">📚 Student Portal</div><nav><ul>
+  <li><a href="student.html">Overview</a></li><li><a href="opportunities.html">Opportunities</a></li><li><a href="mentorship.html">Mentorship</a></li><li><a href="events.html">Events</a></li>
+  <li><a href="#" id="logoutBtn">Logout</a></li>
+</ul></nav></header>
+<main>
+  <section class="inner-hero"><div><span class="eyebrow">Build your future</span><h1>Discover opportunities</h1><p>Explore roles selected from active recruiter partnerships and alumni referrals.</p></div><div class="hero-orb">💼</div></section>
+  <section class="section discovery-page">
+    <div class="discovery-header"><div><span class="eyebrow">Curated for you</span><h2>Open positions</h2></div><p><strong id="jobCount">0</strong> opportunities available</p></div>
+    <div class="filter-bar">
+      <label><span>Search</span><input id="jobSearch" type="search" placeholder="Role, company or skill" /></label>
+      <label><span>Work type</span><select id="jobType"><option value="">All types</option><option>Internship</option><option>Full-time</option></select></label>
+      <label><span>Location</span><select id="jobLocation"><option value="">All locations</option><option>Bengaluru</option><option>Mumbai</option><option>Remote</option></select></label>
+      <button id="clearFilters" type="button">Reset</button>
+    </div>
+    <div id="opportunityGrid" class="opportunity-grid"><div class="skeleton-card"></div><div class="skeleton-card"></div><div class="skeleton-card"></div></div>
+  </section>
+</main>
+<script src="dashboard.js"></script><script src="frontend-enhancements.js"></script><script src="opportunities.js"></script><script src="portal-shared.js"></script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+const bcrypt = require('bcryptjs');
+const fs = require('fs');
+const path = require('path');
+
+const dbFile = path.resolve(process.cwd(), process.env.DB_FILE || 'data/alumni-connect.json');
+fs.mkdirSync(path.dirname(dbFile), { recursive: true });
+
+const password = bcrypt.hashSync('password123', 10);
+const db = {
+  users: [
+    { id: 1, name: 'Aarav Mehta', email: 'alumni@demo.com', password_hash: password, role: 'Alumni', graduation_year: '2021', institute: 'National Institute of Technology', company_name: 'Microsoft', avatar: 'https://i.pravatar.cc/160?img=12', created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
+    { id: 2, name: 'Priya Sharma', email: 'student@demo.com', password_hash: password, role: 'Student', graduation_year: '2027', institute: 'National Institute of Technology', company_name: null, avatar: 'https://i.pravatar.cc/160?img=47', created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
+    { id: 3, name: 'Rahul Kapoor', email: 'recruiter@demo.com', password_hash: password, role: 'Recruiter', graduation_year: null, institute: null, company_name: 'TechNova Labs', avatar: 'https://i.pravatar.cc/160?img=11', created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
+    { id: 4, name: 'Dr. Neha Singh', email: 'institute@demo.com', password_hash: password, role: 'Institute', graduation_year: null, institute: 'National Institute of Technology', company_name: null, avatar: 'https://i.pravatar.cc/160?img=32', created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
+    { id: 5, name: 'Kavya Rao', email: 'kavya@demo.com', password_hash: password, role: 'Alumni', graduation_year: '2019', institute: 'National Institute of Technology', company_name: 'Google', avatar: 'https://i.pravatar.cc/160?img=44', created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
+    { id: 6, name: 'Arjun Verma', email: 'arjun@demo.com', password_hash: password, role: 'Alumni', graduation_year: '2020', institute: 'National Institute of Technology', company_name: 'Amazon', avatar: 'https://i.pravatar.cc/160?img=68', created_at: new Date().toISOString(), updated_at: new Date().toISOString() }
+  ],
+  batches: [{ id: 1, institute_id: 4, name: '2023-2027', created_at: new Date().toISOString() }],
+  batch_students: [],
+  jobs: [
+    { id: 1, recruiter_id: 3, title: 'Frontend Developer Intern', description: 'Build polished, accessible React interfaces with a fast-growing product team.', location: 'Bengaluru · Hybrid', job_type: 'Internship', status: 'open', created_at: new Date().toISOString(), updated_at: new Date().toISOString() },
+    { id: 2, recruiter_id: 3, title: 'Associate Data Analyst', description: 'Turn complex datasets into clear insights for customer success teams.', location: 'Mumbai · Remote', job_type: 'Full-time', status: 'open', created_at: new Date().toISOString(), updated_at: new Date().toISOString() }
+  ],
+  mentorship_requests: [{ id: 1, student_id: 2, alumni_id: 1, topic: 'Career guidance', message: 'I would like guidance on preparing for software engineering interviews.', status: 'accepted', created_at: new Date().toISOString() }],
+  events: [
+    { id: 1, title: 'Alumni Leadership Summit', description: 'Meet industry leaders, founders, and mentors at the annual campus summit.', date: '2026-12-18', location: 'Convention Hall', image: 'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=900&q=80', created_at: new Date().toISOString() },
+    { id: 2, title: 'Career & Innovation Fair', description: 'Discover internships, jobs, and emerging startup opportunities.', date: '2027-01-22', location: 'Main Auditorium', image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=900&q=80', created_at: new Date().toISOString() },
+    { id: 3, title: 'Global Alumni Networking Night', description: 'Connect with alumni across technology, design, finance, and research.', date: '2027-02-12', location: 'Virtual Meetup', image: 'https://images.unsplash.com/photo-1515187029135-18ee286d815b?auto=format&fit=crop&w=900&q=80', created_at: new Date().toISOString() }
+  ],
+  chat_messages: [
+    { id: 1, sender_id: 1, sender_name: 'Aarav Mehta', sender_role: 'Alumni', avatar: 'https://i.pravatar.cc/160?img=12', message: 'Welcome to the community! Ask anything about interviews or careers.', created_at: new Date().toISOString() },
+    { id: 2, sender_id: 2, sender_name: 'Priya Sharma', sender_role: 'Student', avatar: 'https://i.pravatar.cc/160?img=47', message: 'Thank you! I am preparing for my first frontend interview.', created_at: new Date().toISOString() }
+  ]
+};
+
+fs.writeFileSync(dbFile, JSON.stringify(db, null, 2));
+console.log(`Seeded demo data in ${dbFile}`);
+console.log('Demo password for every account: password123');
